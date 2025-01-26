@@ -1,0 +1,154 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+		<script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+		<script type="text/javascript">
+			window.tailwind.config = {
+				darkMode: ['class'],
+				theme: {
+					extend: {
+						colors: {
+							border: 'hsl(var(--border))',
+							input: 'hsl(var(--input))',
+							ring: 'hsl(var(--ring))',
+							background: 'hsl(var(--background))',
+							foreground: 'hsl(var(--foreground))',
+							primary: {
+								DEFAULT: 'hsl(var(--primary))',
+								foreground: 'hsl(var(--primary-foreground))'
+							},
+							secondary: {
+								DEFAULT: 'hsl(var(--secondary))',
+								foreground: 'hsl(var(--secondary-foreground))'
+							},
+							destructive: {
+								DEFAULT: 'hsl(var(--destructive))',
+								foreground: 'hsl(var(--destructive-foreground))'
+							},
+							muted: {
+								DEFAULT: 'hsl(var(--muted))',
+								foreground: 'hsl(var(--muted-foreground))'
+							},
+							accent: {
+								DEFAULT: 'hsl(var(--accent))',
+								foreground: 'hsl(var(--accent-foreground))'
+							},
+							popover: {
+								DEFAULT: 'hsl(var(--popover))',
+								foreground: 'hsl(var(--popover-foreground))'
+							},
+							card: {
+								DEFAULT: 'hsl(var(--card))',
+								foreground: 'hsl(var(--card-foreground))'
+							},
+						},
+					}
+				}
+			}
+		</script>
+		<style type="text/tailwindcss">
+			@layer base {
+				:root {
+					--background: 0 0% 100%;
+--foreground: 224 71.4% 4.1%;
+--card: 0 0% 100%;
+--card-foreground: 224 71.4% 4.1%;
+--popover: 0 0% 100%;
+--popover-foreground: 224 71.4% 4.1%;
+--primary: 262.1 83.3% 57.8%;
+--primary-foreground: 210 20% 98%;
+--secondary: 220 14.3% 95.9%;
+--secondary-foreground: 220.9 39.3% 11%;
+--muted: 220 14.3% 95.9%;
+--muted-foreground: 220 8.9% 46.1%;
+--accent: 220 14.3% 95.9%;
+--accent-foreground: 220.9 39.3% 11%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 210 20% 98%;
+--border: 220 13% 91%;
+--input: 220 13% 91%;
+--ring: 262.1 83.3% 57.8%;
+				}
+				.dark {
+					--background: 224 71.4% 4.1%;
+--foreground: 210 20% 98%;
+--card: 224 71.4% 4.1%;
+--card-foreground: 210 20% 98%;
+--popover: 224 71.4% 4.1%;
+--popover-foreground: 210 20% 98%;
+--primary: 263.4 70% 50.4%;
+--primary-foreground: 210 20% 98%;
+--secondary: 215 27.9% 16.9%;
+--secondary-foreground: 210 20% 98%;
+--muted: 215 27.9% 16.9%;
+--muted-foreground: 217.9 10.6% 64.9%;
+--accent: 215 27.9% 16.9%;
+--accent-foreground: 210 20% 98%;
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 210 20% 98%;
+--border: 215 27.9% 16.9%;
+--input: 215 27.9% 16.9%;
+--ring: 263.4 70% 50.4%;
+				}
+			}
+		</style>
+  </head>
+  <body>
+    <div class="bg-background text-foreground min-h-screen flex flex-col">
+    <section class="flex flex-col items-center justify-center py-16 text-center bg-primary">
+        <h1 class="text-4xl font-bold text-white">PLAY TO EARN</h1>
+        <p class="mt-4 text-lg text-muted-foreground">REVOLUTION WEB3 GAME CENTER</p>
+        <a href="#" class="mt-6 bg-secondary text-secondary-foreground px-6 py-3 rounded-lg hover:bg-secondary/80">CONNECT HERE</a>
+        <div class="mt-8 flex space-x-4">
+            <img src="https://placehold.co/100x100" alt="coin" crossorigin="anonymous">
+            <img src="https://placehold.co/100x100" alt="coin" crossorigin="anonymous">
+            <img src="https://placehold.co/100x100" alt="coin" crossorigin="anonymous">
+        </div>
+    </section>
+    <section class="py-16 bg-card">
+        <h2 class="text-3xl font-bold text-center">OUR ECOSYSTEM</h2>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <img src="https://placehold.co/200x200" alt="Mini Game Center" class="rounded-lg" crossorigin="anonymous">
+                <h3 class="mt-4 text-xl font-semibold">MINI GAME CENTER</h3>
+                <p class="mt-2 text-muted-foreground">Engagement: Users can participate in fun mini-games that reward them with NFTs or lottery tickets.</p>
+                <a href="#" class="mt-4 text-blue-500 hover:underline">FIND OUT MORE</a>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <img src="https://placehold.co/200x200" alt="NFT Market" class="rounded-lg" crossorigin="anonymous">
+                <h3 class="mt-4 text-xl font-semibold">NFT MARKET</h3>
+                <p class="mt-2 text-muted-foreground">Trading Platform: A dedicated space for users to buy, sell, and trade in-game NFTs securely.</p>
+                <a href="#" class="mt-4 text-blue-500 hover:underline">FIND OUT MORE</a>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <img src="https://placehold.co/200x200" alt="Driven AI Agent" class="rounded-lg" crossorigin="anonymous">
+                <h3 class="mt-4 text-xl font-semibold">DRIVEN AI AGENT</h3>
+                <p class="mt-2 text-muted-foreground">Personalized Experience: AI agents assist users in navigating the marketplace, suggesting trades, and optimizing gameplay strategies.</p>
+                <a href="#" class="mt-4 text-blue-500 hover:underline">FIND OUT MORE</a>
+            </div>
+        </div>
+    </section>
+    <section class="py-16 bg-primary">
+        <h2 class="text-3xl font-bold text-center">FEATURES PLAN</h2>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-card p-6 rounded-lg shadow-md">
+                <img src="https://placehold.co/200x200" alt="Premium NFT Market" class="rounded-lg" crossorigin="anonymous">
+                <h3 class="mt-4 text-xl font-semibold">PREMIUM NFT MARKET</h3>
+                <p class="mt-2 text-muted-foreground">A dedicated space for users to buy, sell, and trade in-game NFTs securely.</p>
+            </div>
+            <div class="bg-card p-6 rounded-lg shadow-md">
+                <img src="https://placehold.co/200x200" alt="Group Driven AI Community" class="rounded-lg" crossorigin="anonymous">
+                <h3 class="mt-4 text-xl font-semibold">GROUP DRIVEN AI COMMUNITY</h3>
+                <p class="mt-2 text-muted-foreground">Personalized Experience: AI agents assist users in navigating the marketplace, suggesting trades, and optimizing gameplay strategies.</p>
+            </div>
+        </div>
+        <div class="mt-8 text-center">
+            <a href="#" class="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg hover:bg-secondary/80">SEE MORE</a>
+        </div>
+    </section>
+</div>
+
+  </body>
+</html>
