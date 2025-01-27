@@ -1,43 +1,30 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { WalletContext } from '../contexts/WalletContext';
-import { mintEarlyAccessNFT, mintWinnerNFT, checkNFTOwnership } from '../utils/solana';
+import { getBalance } from '../utils/solana';
 
 const NFTCenter = () => {
   const { publicKey } = useContext(WalletContext);
-  const [hasEarlyAccessNFT, setHasEarlyAccessNFT] = useState(false);
-  const [isWinner, setIsWinner] = useState(false);
+  const [balance, setBalance] = useState({ sol: 0, pumpfun: 0 });
 
   useEffect(() => {
-    if (publicKey) {
-      checkNFTStatus();
-    }
+    const fetchBalance = async () => {
+      if (publicKey) {
+        const balanceInfo = await getBalance(publicKey);
+        setBalance(balanceInfo);
+      }
+    };
+    fetchBalance();
   }, [publicKey]);
 
-  const checkNFTStatus = async () => {
-    const ownsNFT = await checkNFTOwnership(publicKey);
-    setHasEarlyAccessNFT(ownsNFT);
-  };
-
-  const handleMintEarlyAccess = async () => {
-    if (publicKey) {
-      await mintEarlyAccessNFT(publicKey);
-      await checkNFTStatus();
-    }
-  };
-
-  const handleMintWinner = async () => {
-    if (publicKey && isWinner) {
-      await mintWinnerNFT(publicKey);
-    }
-  };
-
   return (
-    <div>
+    <div className="nft-center">
       <h2>NFT Center</h2>
-      {!hasEarlyAccessNFT && (
-        <button onClick={handleMintEarlyAccess}>Mint Early Access NFT</button>
+      {publicKey && (
+        <div>
+          <p>SOL Balance: {balance.sol}</p>
+          <p>PumpFun Balance: {balance.pumpfun}</p>
+        </div>
       )}
-      {isWinner && <button onClick={handleMintWinner}>Mint Winner NFT</button>}
     </div>
   );
 };

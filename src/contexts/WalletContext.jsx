@@ -1,39 +1,46 @@
-// File: solana-lottery-app/src/contexts/WalletContext.jsx
-
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useCallback } from 'react';
+import { Connection } from '@solana/web3.js';
 
 export const WalletContext = createContext();
 
 export const WalletProvider = ({ children }) => {
   const [publicKey, setPublicKey] = useState(null);
+  const [connection] = useState(
+    new Connection(process.env.REACT_APP_SOLANA_NETWORK, 'confirmed')
+  );
 
-    const connectWallet = async () => {
-        // Implement wallet connection logic here
-            // This should connect to a Solana wallet (e.g., Phantom)
-                // and set the publicKey state
-                    try {
-                          // Example using Phantom wallet:
-                                const { solana } = window;
-                                      if (solana && solana.isPhantom) {
-                                              const response = await solana.connect();
-                                                      setPublicKey(response.publicKey.toString());
-                                                            } else {
-                                                                    alert("Please install Phantom wallet");
-                                                                          }
-                                                                              } catch (error) {
-                                                                                    console.error("Error connecting wallet:", error);
-                                                                                        }
-                                                                                          };
+  const connectWallet = useCallback(async () => {
+    try {
+      const { solana } = window;
+      if (!solana?.isPhantom) {
+        window.open('https://phantom.app/', '_blank');
+        throw new Error("Please install Phantom wallet");
+      }
 
-                                                                                            const disconnectWallet = () => {
-                                                                                                // Implement wallet disconnection logic here
-                                                                                                    setPublicKey(null);
-                                                                                                      };
+      const response = await solana.connect();
+      setPublicKey(response.publicKey.toString());
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      alert(error.message);
+    }
+  }, []);
 
-                                                                                                        return (
-                                                                                                            <WalletContext.Provider value={{ publicKey, connectWallet, disconnectWallet }}>
-                                                                                                                  {children}
-                                                                                                                      </WalletContext.Provider>
-                                                                                                                        );
-                                                                                                                        };
-                                                                                                                        
+  const disconnectWallet = useCallback(() => {
+    const { solana } = window;
+    if (solana) {
+      solana.disconnect();
+      setPublicKey(null);
+    }
+  }, []);
+
+  return (
+    <WalletContext.Provider value={{ 
+      publicKey, 
+      connection,
+      connectWallet, 
+      disconnectWallet 
+    }}>
+      {children}
+    </WalletContext.Provider>
+  );
+};

@@ -1,37 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { WalletContext } from '../contexts/WalletContext';
-import { getBalance } from '../utils/solana';
 
 const LandingPage = () => {
-  const { publicKey, connectWallet } = useContext(WalletContext);
-    const [balance, setBalance] = useState({ sol: 0, pumpfun: 0 });
+  const { publicKey, connectWallet, disconnectWallet } = useContext(WalletContext);
 
-      useEffect(() => {
-          if (publicKey) {
-                fetchBalance();
-                    }
-                      }, [publicKey]);
+  return (
+    <div className="landing-page">
+      <h1>Welcome to Solana Lottery</h1>
+      {!publicKey ? (
+        <button onClick={connectWallet}>Connect Wallet</button>
+      ) : (
+        <div>
+          <p>Connected: {publicKey}</p>
+          <button onClick={disconnectWallet}>Disconnect</button>
+        </div>
+      )}
+    </div>
+  );
+};
 
-                        const fetchBalance = async () => {
-                            const balances = await getBalance(publicKey);
-                                setBalance(balances);
-                                  };
-
-                                    return (
-                                        <div>
-                                              <h1>Solana Lottery Overview</h1>
-                                                    {publicKey ? (
-                                                            <div>
-                                                                      <p>Connected: {publicKey}</p>
-                                                                                <p>SOL Balance: {balance.sol}</p>
-                                                                                          <p>Pumpfun Balance: {balance.pumpfun}</p>
-                                                                                                  </div>
-                                                                                                        ) : (
-                                                                                                                <button onClick={connectWallet}>Connect Wallet</button>
-                                                                                                                      )}
-                                                                                                                          </div>
-                                                                                                                            );
-                                                                                                                            };
-
-                                                                                                                            export default LandingPage;
-                                                                                                                            
+export default LandingPage;

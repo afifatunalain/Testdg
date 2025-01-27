@@ -1,33 +1,71 @@
-import { Connection, PublicKey, Transaction } from '@solana/web3.js';
-import { Token, TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { Connection, PublicKey } from '@solana/web3.js';
+import { 
+  getAssociatedTokenAddress, 
+  getAccount, 
+  createAssociatedTokenAccountInstruction,
+  getAssociatedTokenAddressSync,
+  TOKEN_PROGRAM_ID
+} from '@solana/spl-token';
 import { NFT_EARLY_ACCESS_ADDRESS, NFT_WINNER_ADDRESS, PUMPFUN_TOKEN_ADDRESS } from '../config/contracts';
 
-const connection = new Connection('YOUR_RPC_ENDPOINT');
+const connection = new Connection('https://api.mainnet-beta.solana.com');
 
-export const getBalance = async (publicKey) => {
-  const solBalance = await connection.getBalance(new PublicKey(publicKey));
-  const pumpfunBalance = await getPumpfunBalance(publicKey);
-  return { sol: solBalance / 1e9, pumpfun: pumpfunBalance };
-};
-
-const getPumpfunBalance = async (publicKey) => {
-  const token = new Token(connection, new PublicKey(PUMPFUN_TOKEN_ADDRESS), TOKEN_PROGRAM_ID, null);
-  const account = await token.getAccountInfo(new PublicKey(publicKey));
-  return account ? account.amount.toNumber() / 1e9 : 0;
+export const getTokenBalance = async (publicKey, tokenMintAddress) => {
+  try {
+    const associatedTokenAddress = await getAssociatedTokenAddress(
+      new PublicKey(tokenMintAddress),
+      new PublicKey(publicKey)
+    );
+    
+    const tokenAccount = await getAccount(
+      connection,
+      associatedTokenAddress
+    );
+    
+    return tokenAccount.amount;
+  } catch (error) {
+    console.error('Error getting token balance:', error);
+    return 0;
+  }
 };
 
 export const checkNFTOwnership = async (publicKey) => {
-  // Implement NFT ownership check logic here
+  try {
+    const tokenAccount = await getAssociatedTokenAddress(
+      new PublicKey(NFT_EARLY_ACCESS_ADDRESS),
+      new PublicKey(publicKey)
+    );
+    const account = await getAccount(connection, tokenAccount);
+    return account.amount > 0;
+  } catch {
+    return false;
+  }
 };
 
-export const mintEarlyAccessNFT = async (publicKey) => {
-  // Implement Early Access NFT minting logic here
+export const enterLottery = async (publicKey) => {
+  try {
+    const tokenAccount = await getAssociatedTokenAddress(
+      new PublicKey(PUMPFUN_TOKEN_ADDRESS),
+      new PublicKey(publicKey)
+    );
+    // Implement lottery entry logic here
+    return true;
+  } catch (error) {
+    console.error('Error entering lottery:', error);
+    throw error;
+  }
 };
 
-export const mintWinnerNFT = async (publicKey) => {
-  // Implement Winner NFT minting logic here
-};
-
-export const enterLottery = async (publicKey, amount) => {
-  // Implement lottery entry logic here, including Pumpfun token transfer and Solana transaction fee
+export const getBalance = async (publicKey) => {
+  try {
+    const solBalance = await connection.getBalance(new PublicKey(publicKey));
+    const pumpfunBalance = await getTokenBalance(publicKey, PUMPFUN_TOKEN_ADDRESS);
+    return { 
+      sol: solBalance / 1e9, 
+      pumpfun: pumpfunBalance / 1e9 
+    };
+  } catch (error) {
+    console.error('Error getting balance:', error);
+    return { sol: 0, pumpfun: 0 };
+  }
 };
